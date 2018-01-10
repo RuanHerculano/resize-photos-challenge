@@ -1,3 +1,5 @@
+require 'open-uri'
+
 class ImagesController < ApplicationController
   before_action :set_image, only: [:show, :edit, :update, :destroy]
 
@@ -24,6 +26,12 @@ class ImagesController < ApplicationController
   # POST /images
   # POST /images.json
   def create
+    file = File.new('teste.jpg', 'w')
+    file.binmode
+    file.write(open('http://54.152.221.29/images/b737_5.jpg').read)
+    file.rewind
+    file.close
+
     @image = Image.new(image_params)
 
     respond_to do |format|
