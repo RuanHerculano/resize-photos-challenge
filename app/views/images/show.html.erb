@@ -3,6 +3,7 @@
 <p>
   <strong>Description:</strong>
   <%= @image.description %>
+  <%= image_tag @image.content.url %>
 </p>
 
 <%= link_to 'Edit', edit_image_path(@image) %> |
