@@ -26,11 +26,7 @@ class ImagesController < ApplicationController
   # POST /images
   # POST /images.json
   def create
-    file = File.new('teste.jpg', 'w')
-    file.binmode
-    file.write(open('http://54.152.221.29/images/b737_5.jpg').read)
-    file.rewind
-    file.close
+    ImagesService.create(image_params)
 
     @image = Image.new(image_params)
 
