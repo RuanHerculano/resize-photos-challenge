@@ -3,7 +3,6 @@ class ImagesService
     success = true
     status = :created
     response = nil
-    images = nil
 
     begin
       destroy_all_images

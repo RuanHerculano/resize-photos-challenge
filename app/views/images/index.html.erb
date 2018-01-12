@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Images</h1>
+<h1>Imagens</h1>
 
 <table>
   <thead>
@@ -15,6 +15,9 @@
       <tr>
         <td><%= image.description %></td>
         <td><%= link_to 'Show', image %></td>
+        <td><%= link_to 'small', small_images_path(image) %></td>
+        <td><%= link_to 'medium', medium_images_path(image) %></td>
+        <td><%= link_to 'large', large_images_path(image) %></td>
       </tr>
     <% end %>
   </tbody>

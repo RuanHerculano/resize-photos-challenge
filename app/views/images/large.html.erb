@@ -1,0 +1,9 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @image.description %>
+  <%= image_tag @image.content.url(:large) %>
+</p>
+
+<%= link_to 'Voltar', images_path %>

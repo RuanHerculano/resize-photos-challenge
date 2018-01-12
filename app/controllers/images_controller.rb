@@ -1,5 +1,11 @@
 class ImagesController < ApplicationController
-  before_action :set_image, only: [:show]
+  before_action :set_image, only: [:show, :small, :medium, :large]
+
+  def small; end
+
+  def medium; end
+
+  def large; end
 
   # GET /images
   # GET /images.json
@@ -9,8 +15,7 @@ class ImagesController < ApplicationController
 
   # GET /images/1
   # GET /images/1.json
-  def show
-  end
+  def show; end
 
   # GET /images/new
   def new
