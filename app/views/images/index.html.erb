@@ -15,8 +15,6 @@
       <tr>
         <td><%= image.description %></td>
         <td><%= link_to 'Show', image %></td>
-        <td><%= link_to 'Edit', edit_image_path(image) %></td>
-        <td><%= link_to 'Destroy', image, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -24,4 +22,4 @@
 
 <br>
 
-<%= link_to 'New Image', new_image_path %>
+<%= link_to 'Gerar novamente imagens', new_image_path %>
