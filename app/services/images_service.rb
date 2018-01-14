@@ -33,12 +33,6 @@ class ImagesService
     images
   end
 
-  def self.create_image_record(index)
-    dir = Rails.root.join('public', 'images', "Imagem #{index+1}.jpg")
-    file = File.new(dir, 'r')
-    Image.create(description: "Imagem #{index+1}.jpg", content: file)
-  end
-
   def self.destroy_all_images
     Image.destroy_all
   end
@@ -50,6 +44,19 @@ class ImagesService
     end
   end
 
+  def self.get_url_images
+    response = HTTParty.get(Settings.url.images)
+    url_images = response.parsed_response['images']
+    url_images
+  end
+
+  def self.create_image_record(index)
+    dir = Rails.root.join('public', 'images', "Imagem #{index+1}.jpg")
+    file = File.new(dir, 'r')
+    Image.create(description: "Imagem #{index+1}.jpg", content: file)
+  end
+  private_class_method :create_image_record
+
   def self.generate_image(image_url, index)
     dir = Rails.root.join('public', 'images', "Imagem #{index+1}.jpg")
     file = File.new(dir, 'w')
@@ -58,10 +65,5 @@ class ImagesService
     file.rewind
     file.close
   end
-
-  def self.get_url_images
-    response = HTTParty.get(Settings.url.images)
-    url_images = response.parsed_response['images']
-    url_images
-  end
+  private_class_method :generate_image
 end
