@@ -158,10 +158,3 @@ test:
         read:
           mode: :primary
         max_pool_size: 1
-
-production:
-  sessions:
-    default:
-      database: resize_photos_production
-        hosts:
-          - localhost:27017
