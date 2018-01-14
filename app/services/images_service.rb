@@ -7,7 +7,7 @@ class ImagesService
     begin
       destroy_all_images
       generate_images
-      response = create_records
+      response = build_images
     rescue Exception => error
       success = false
       status = :unprocessable_entity
@@ -23,18 +23,20 @@ class ImagesService
     image
   end
 
-  def self.create_records
+  def self.build_images
     images = []
 
     10.times do |index|
-      image = Image.new
-      image.description = "Imagem #{index+1}.jpg"
-      image.content = File.new(Rails.root.join('public', 'images', "Imagem #{index+1}.jpg"), 'r')
-      image.save
-      images.push(image)
+      images.push(create_image_record(index))
     end
 
     images
+  end
+
+  def self.create_image_record(index)
+    dir = Rails.root.join('public', 'images', "Imagem #{index+1}.jpg")
+    file = File.new(dir, 'r')
+    Image.create(description: "Imagem #{index+1}.jpg", content: file)
   end
 
   def self.destroy_all_images
@@ -42,14 +44,24 @@ class ImagesService
   end
 
   def self.generate_images
+    url_images = get_url_images
+    url_images.each_with_index do |image_url, index|
+      generate_image(image_url, index)
+    end
+  end
+
+  def self.generate_image(image_url, index)
+    dir = Rails.root.join('public', 'images', "Imagem #{index+1}.jpg")
+    file = File.new(dir, 'w')
+    file.binmode
+    file.write(open(image_url['url']).read)
+    file.rewind
+    file.close
+  end
+
+  def self.get_url_images
     response = HTTParty.get('http://54.152.221.29/images.json')
     url_images = response.parsed_response['images']
-    url_images.each_with_index do |image_url, index|
-      file = File.new(Rails.root.join('public', 'images', "Imagem #{index+1}.jpg"), 'w')
-      file.binmode
-      file.write(open(image_url['url']).read)
-      file.rewind
-      file.close
-    end
+    url_images
   end
 end
