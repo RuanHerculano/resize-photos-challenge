@@ -60,7 +60,7 @@ class ImagesService
   end
 
   def self.get_url_images
-    response = HTTParty.get('http://54.152.221.29/images.json')
+    response = HTTParty.get(Settings.url.images)
     url_images = response.parsed_response['images']
     url_images
   end

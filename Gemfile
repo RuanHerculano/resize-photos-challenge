@@ -34,17 +34,17 @@ gem 'jbuilder', '~> 2.5'
 # https://rubygems.org/gems/mongoid/versions/7.0.0.beta
 gem 'mongoid', '~> 7.0.0.beta'
 
-gem 'rspec-rails', '~> 3.4', '>= 3.4.2'
-
 gem 'httparty', '~> 0.13.7'
 
 gem 'paperclip', '~> 4.3', '>= 4.3.6'
 
 gem 'mongoid-paperclip', '~> 0.0.10'
 
-gem 'rails-controller-testing', '~> 0.0.3'
+gem 'config', '~> 1.0'
 
 group :test do
+  gem 'rspec-rails', '~> 3.4', '>= 3.4.2'
+  gem 'rails-controller-testing', '~> 0.0.3'
   gem 'database_cleaner', '~> 1.5', '>= 1.5.3'
 end
 
