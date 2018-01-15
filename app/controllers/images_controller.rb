@@ -25,7 +25,7 @@ class ImagesController < ApplicationController
   # POST /images
   # POST /images.json
   def create
-    result = ImagesService.create
+    result = RecordImagesService.create
 
     respond_to do |format|
       if result.success

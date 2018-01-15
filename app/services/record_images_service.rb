@@ -1,4 +1,4 @@
-class ImagesService
+class RecordImagesService
   def self.create
     success = true
     status = :created
@@ -6,7 +6,7 @@ class ImagesService
 
     begin
       destroy_all_images
-      generate_images
+      GenerateImagesService.execute
       response = build_images
     rescue Exception => error
       success = false
@@ -25,8 +25,10 @@ class ImagesService
 
   def self.build_images
     images = []
+    file_path = Rails.root.join('public', 'images')
+    amount_images = Dir[File.join(file_path, '**', '*')].count { |file| File.file?(file) }
 
-    10.times do |index|
+    amount_images.times do |index|
       images.push(create_image_record(index))
     end
 
@@ -37,33 +39,10 @@ class ImagesService
     Image.destroy_all
   end
 
-  def self.generate_images
-    url_images = get_url_images
-    url_images.each_with_index do |image_url, index|
-      generate_image(image_url, index)
-    end
-  end
-
-  def self.get_url_images
-    response = HTTParty.get(Settings.url.images)
-    url_images = response.parsed_response['images']
-    url_images
-  end
-
   def self.create_image_record(index)
-    dir = Rails.root.join('public', 'images', "Imagem #{index+1}.jpg")
-    file = File.new(dir, 'r')
+    file_path = Rails.root.join('public', 'images', "Imagem #{index+1}.jpg")
+    file = File.new(file_path, 'r')
     Image.create(description: "Imagem #{index+1}.jpg", content: file)
   end
   private_class_method :create_image_record
-
-  def self.generate_image(image_url, index)
-    dir = Rails.root.join('public', 'images', "Imagem #{index+1}.jpg")
-    file = File.new(dir, 'w')
-    file.binmode
-    file.write(open(image_url['url']).read)
-    file.rewind
-    file.close
-  end
-  private_class_method :generate_image
 end
